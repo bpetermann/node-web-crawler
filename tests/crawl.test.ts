@@ -1,5 +1,5 @@
-const { normalizeURL } = require('./crawl.js')
-const { expect } = require('@jest/globals');
+import { normalizeURL } from '../lib/crawl';
+import { expect } from '@jest/globals';
 
 const normalized = 'example.com/';
 const normalizedPath = 'example.com/demonstration';
