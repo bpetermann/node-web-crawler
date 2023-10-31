@@ -20,6 +20,14 @@ it('should keep the pathname of the url', () => {
   expect(result).toBe(normalizedPath);
 });
 
+it('should work with capital letters', () => {
+  const url = 'https://EXAMPLE.com/';
+
+  const result = normalizeURL(url);
+
+  expect(result).toBe(normalized);
+});
+
 it('should throw in case of a invalid url', () => {
   const url = 'thisisnotavalidurl';
 
