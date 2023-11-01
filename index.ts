@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { crawlPage } from './lib/crawl';
 import colors from 'colors';
 
 require('yargs')
@@ -12,8 +13,10 @@ require('yargs')
         type: 'string',
       },
     },
-    handler({ url }: { url: string }) {
-      console.log(colors.magenta(`Started crawling: ${url}`));
+    async handler({ url }: { url: string }) {
+      console.log(colors.blue(`started crawling: ${url}`));
+      const links = await crawlPage(url, url, {});
+      console.log(links);
     },
   })
   .help().argv;
