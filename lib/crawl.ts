@@ -29,8 +29,8 @@ export const crawlPage = async (url: string, current: string, pages: {}) => {
 
   const normalizedCurrent = normalizeURL(current);
 
-  if (pages[normalizedCurrent]) {
-    pages[normalizedCurrent] = pages[normalizedCurrent] + 1;
+  if (pages[normalizedCurrent] > 0) {
+    pages[normalizedCurrent]++;
     return pages;
   }
 
