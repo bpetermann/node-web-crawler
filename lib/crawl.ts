@@ -1,3 +1,4 @@
+import { log } from './print';
 import jsdom from 'jsdom';
 const { JSDOM } = jsdom;
 
@@ -20,7 +21,7 @@ export const normalizeURL = (url: string) => {
 };
 
 const httpRequest = async (url: string) => {
-  console.log(`crawling ${url}`.blue);
+  log('blue', `crawling ${url}`);
   try {
     const response = await fetch(url);
     const html = await response.text();

@@ -1,11 +1,11 @@
-import colors from 'colors';
+import { log } from './print';
 
 export const printReport = (pages: { [k: string]: number }) => {
-  console.log(colors.green('start report:'));
+  log('green', 'start report:');
   formatPages(pages).map(({ href, count }) => {
-    console.log(`found ${count} link${count > 1 ? 's' : ''} to ${href}`);
+    log('white', `found ${count} link${count > 1 ? 's' : ''} to ${href}`);
   });
-  console.log(colors.green('end report'));
+  log('green', 'end report');
 };
 
 const formatPages = (pages: { [k: string]: number }) => {

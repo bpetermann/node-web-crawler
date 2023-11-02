@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-import { crawlPage } from './lib/crawl';
 import { printReport } from './lib/report';
+import { crawlPage } from './lib/crawl';
+import { log } from './lib/print';
 
 require('yargs')
   .command({
@@ -14,7 +15,7 @@ require('yargs')
       },
     },
     async handler({ url }: { url: string }) {
-      console.log(`started crawling: ${url}`.magenta);
+      log('magenta', `started crawling: ${url}`);
       const result = await crawlPage(url, url, {});
       printReport(result);
     },
