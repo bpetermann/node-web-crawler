@@ -14,16 +14,26 @@ export const normalizeURL = (url: string) => {
   try {
     const { host, pathname } = new URL(url);
     return host + pathname;
-  } catch (_) {
+  } catch {
     throw new Error('Not a valid url');
   }
 };
 
-export const crawlPage = async (url: string, current: string, pages: {}) => {
-  const { host } = new URL(url);
-  const { host: currentHost } = new URL(current);
+const httpRequest = async (url: string) => {
+  try {
+    const response = await fetch(url);
+    const html = await response.text();
+    return html;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+};
 
-  if (host !== currentHost) {
+export const crawlPage = async (url: string, current: string, pages: {}) => {
+  const { hostname } = new URL(url);
+  const { hostname: currentHost } = new URL(current);
+
+  if (hostname !== currentHost) {
     return pages;
   }
 
@@ -34,25 +44,14 @@ export const crawlPage = async (url: string, current: string, pages: {}) => {
     return pages;
   }
 
-  if (url === current) {
-    pages[normalizedCurrent] = 0;
-  } else {
-    pages[normalizedCurrent] = 1;
-  }
+  pages[normalizedCurrent] = 1;
 
-  let doc: string;
-
-  try {
-    const response = await fetch(url);
-    const html = await response.text();
-    doc = html;
-  } catch (err) {
-    console.log(err.message);
-  }
+  let doc = await httpRequest(current);
 
   const urls = getURLsFromHTML(doc, url);
 
-  urls.map((item) => crawlPage(url, item, pages));
-
+  for (const nextUrl of urls) {
+    pages = await crawlPage(url, nextUrl, pages);
+  }
   return pages;
 };
