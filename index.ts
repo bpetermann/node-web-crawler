@@ -14,7 +14,7 @@ require('yargs')
       },
     },
     async handler({ url }: { url: string }) {
-      console.log(`started crawling: ${url}`.blue);
+      console.log(`started crawling: ${url}`.magenta);
       const result = await crawlPage(url, url, {});
       printReport(result);
     },

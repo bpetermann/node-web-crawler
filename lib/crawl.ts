@@ -20,6 +20,7 @@ export const normalizeURL = (url: string) => {
 };
 
 const httpRequest = async (url: string) => {
+  console.log(`crawling ${url}`.blue);
   try {
     const response = await fetch(url);
     const html = await response.text();
@@ -50,8 +51,9 @@ export const crawlPage = async (url: string, current: string, pages: {}) => {
 
   const urls = getURLsFromHTML(doc, url);
 
-  for (const nextUrl of urls) {
-    pages = await crawlPage(url, nextUrl, pages);
+  for (const next of urls) {
+    pages = await crawlPage(url, next, pages);
   }
+
   return pages;
 };
