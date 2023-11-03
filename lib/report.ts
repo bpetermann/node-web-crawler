@@ -1,11 +1,11 @@
-import { log } from './print';
+import { log } from './helper';
 
 export const printReport = (pages: { [k: string]: number }) => {
-  log('green', 'start report:');
+  log('start report:', 'green');
   formatPages(pages).map(({ href, count }) => {
-    log('white', `found ${count} link${count > 1 ? 's' : ''} to ${href}`);
+    log(`found ${count} link${count > 1 ? 's' : ''} to ${href}`);
   });
-  log('green', 'end report');
+  log('end report', 'green');
 };
 
 const formatPages = (pages: { [k: string]: number }) => {

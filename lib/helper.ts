@@ -1,6 +1,8 @@
 import colors from 'colors';
 
-export const log = (color: string, text: string) => {
+type Colors = 'magenta' | 'green' | 'blue' | 'white';
+
+export const log = (text: string, color: Colors = 'white') => {
   switch (color) {
     case 'magenta':
       console.log(colors.magenta(text));

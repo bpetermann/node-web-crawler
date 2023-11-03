@@ -1,4 +1,4 @@
-import { log } from './print';
+import { log } from './helper';
 import jsdom from 'jsdom';
 const { JSDOM } = jsdom;
 
@@ -21,11 +21,10 @@ export const normalizeURL = (url: string) => {
 };
 
 const httpRequest = async (url: string) => {
-  log('blue', `crawling ${url}`);
+  log(`crawling ${url}`, 'blue');
   try {
     const response = await fetch(url);
-    const html = await response.text();
-    return html;
+    return await response.text();
   } catch (err) {
     throw new Error(err.message);
   }
@@ -48,9 +47,7 @@ export const crawlPage = async (url: string, current: string, pages: {}) => {
 
   pages[normalizedCurrent] = 1;
 
-  let doc = await httpRequest(current);
-
-  const urls = getURLsFromHTML(doc, url);
+  const urls = getURLsFromHTML(await httpRequest(current), url);
 
   for (const next of urls) {
     pages = await crawlPage(url, next, pages);
