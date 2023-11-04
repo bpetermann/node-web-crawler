@@ -8,7 +8,7 @@ export const printReport = (pages: { [k: string]: number }) => {
   log('end report', 'green');
 };
 
-const formatPages = (pages: { [k: string]: number }) => {
+export const formatPages = (pages: { [k: string]: number }) => {
   return Object.keys(pages)
     .map((key) => ({ href: key, count: pages[key] }))
     .sort((b, a) => a.count - b.count);
